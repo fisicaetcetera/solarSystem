@@ -1,0 +1,3 @@
+# solarSystem
+Sun and some planets in motion.  No scaled  according to reality...
+Solar System Simplifyed
