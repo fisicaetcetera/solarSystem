@@ -30,11 +30,11 @@ function setup() {
 
 function draw() {
   background(0);
-  translate(0,0,mouseX);
+  translate(0,0,mouseX/10);
   push();
   translate(0, 0, -1000);
   texture(starsjpg);
-  plane(2500);
+  plane(4500);
   pop();
 
   push();
