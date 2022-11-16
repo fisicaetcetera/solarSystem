@@ -19,7 +19,7 @@ function preload() {
 }
 
 function setup() {
-  setVRBackgroundColor(50, 0, 0);
+  setVRBackgroundColor(50, 50, 50);
   assinatura = createGraphics(380, 100);
   assinatura.background(255, 100);
   assinatura.fill(0);
@@ -30,8 +30,8 @@ function setup() {
 }
 
 function draw() {
-  setViewerPosition(0, 0, 400);
-  translate(0,0,mouseX/10);
+  //setViewerPosition(0, 0, 400);
+  //translate(0,0,mouseX/10);
   push();
   translate(0, 0, -100);
   texture(starsjpg);
