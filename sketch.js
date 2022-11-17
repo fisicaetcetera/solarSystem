@@ -20,7 +20,7 @@ function preload() {
 
 function setup() {
   setVRBackgroundColor(50, 50, 50);
-  createCanvas(1366, 768, WEBGL);
+  //createCanvas(1366, 768, WEBGL);
   assinatura = createGraphics(380, 100);
   assinatura.background(255, 100);
   assinatura.fill(0);
