@@ -15,11 +15,11 @@ function preload() {
   mercuryjpg = loadImage('mercury.jpg');
   venusjpg = loadImage('venus.jpg');
   starsjpg = loadImage('stars.jpg');
-  createVRCanvas();
+  //createVRCanvas();
 }
 
 function setup() {
-  setVRBackgroundColor(50, 50, 50);
+  //setVRBackgroundColor(50, 50, 50);
   assinatura = createGraphics(380, 100);
   assinatura.background(255, 100);
   assinatura.fill(0);
