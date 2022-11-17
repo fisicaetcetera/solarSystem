@@ -32,7 +32,7 @@ function setup() {
 
 function draw() {
   //setViewerPosition(0, 0, 400);
-  translate(0,0,mouseX/5);
+  translate(0,0,mouseX/35);
   rotateZ(mouseY/6);
   noStroke();
   background(0);
