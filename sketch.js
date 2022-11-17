@@ -32,14 +32,14 @@ function setup() {
 
 function draw() {
   //setViewerPosition(0, 0, 400);
-  translate(0,0,mouseX/35);
+  translate(0,0,mouseX/5);
   rotateY(mouseY/60);
   noStroke();
   background(0);
   push();
   translate(0, 0, -1000);
   texture(starsjpg);
-  plane(4500);
+  sphere(4500);
   pop();
 
   push();
