@@ -6,14 +6,17 @@ let sunjpg;
 let starsjpg;
 let assinatura;
 let posx=-200, posz=100;
+let fctr =2;
+let re = 40;  //earth radius
 
 function preload() {
   earthjpg = loadImage('earthcloud-1.jpg');
   moonjpg = loadImage('moonmap1k.jpg');
   marsjpg = loadImage('mars.jpg');
-  sunjpg = loadImage('8k_sun.jpg');
+  sunjpg = loadImage('sun.jpg');
   mercuryjpg = loadImage('mercury.jpg');
   venusjpg = loadImage('venus.jpg');
+  jupiterjpg = loadImage('jupiter.jpg');  
   starsjpg = loadImage('stars.jpg');
   //createVRCanvas();
 }
@@ -27,13 +30,18 @@ function setup() {
   assinatura.textAlign(CENTER);
   assinatura.textSize(90);
   assinatura.text('Bonelli', 190, 85);
-
-}
+  fi0mercury = 6.28*random();
+  fi0venus = 6.28*random();
+  fi0earth = 6.28*random();
+  fi0mars = 6.28*random();
+  fi0jupiter = 6.28*random();
+} 
 
 function draw() {
   //setViewerPosition(0, 0, 400);
-  translate(0,0,mouseX/5);
-  rotateY(mouseY/60);
+  //translate(0,0,mouseX/15);
+  rotateX(mouseY/260);
+  rotateY(-mouseX/260);
   noStroke();
   background(0);
   push();
@@ -55,44 +63,55 @@ function draw() {
   push();
 
   texture(sunjpg);
-  rotateY(frameCount / 3280);
+  rotateY(frameCount / 28000);
   sphere(80);
   pop();
   
   push();
-  rotateY(frameCount/250);
-  translate(0,0,-110);
+  rotateY(fi0mercury+frameCount/87000);
+  translate(0,0,-110*fctr);
+  rotateY(frameCount/58600);  
   texture(mercuryjpg);
-  sphere(13)
+  sphere(0.4*re)
   pop();
 
    push();
-  rotateY(frameCount / 600);
-  translate(0, 0, -150);
-  //rotateY(frameCount / 400);
+  rotateY(fi0venus+frameCount / 224700);
+  translate(0, 0, -150*fctr);
+  rotateY(frameCount / 24300);
   texture(venusjpg);
-  sphere(35);
+  sphere(re);
   pop();
   
   push();
-  rotateY(frameCount / 500);
-  translate(0, 0, -200);
+  rotateY(fi0earth+frameCount/365000);
+  translate(0, 0, -200*fctr);
+  rotateY(frameCount / 1000);
   texture(earthjpg);
   sphere(40);
 
-  rotateY(frameCount / 550);
-  translate(0, 0, -58);
+  rotateY(frameCount / 28000);
+  translate(0, 0, -58*fctr);
   texture(moonjpg);
-  sphere(10);
+  sphere(0.3*re);
   pop();
 
 
   push();
-  rotateY(frameCount / 600);
-  translate(0, 0, -350);
-  rotateY(frameCount / 400);
+  rotateY(fi0mars+frameCount / 657000);
+  translate(0, 0, -350*fctr);
+  rotateY(frameCount / 1030);
   texture(marsjpg);
-  sphere();
+  sphere(0.5*re);
   pop();
+
+  push();
+  rotateY(fi0jupiter+frameCount / 4328900);
+  translate(0, 0, -350*fctr);
+  rotateY(frameCount / 410);
+  texture(jupiterjpg);
+  sphere(11);
+  pop();
+
 
 }
