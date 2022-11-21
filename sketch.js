@@ -8,15 +8,17 @@ let assinatura;
 let posx=-200, posz=100;
 let fctr =2;
 let re = 40;  //earth radius
+let rotationx=0;
 
 function preload() {
-  earthjpg = loadImage('earthcloud-1.jpg');
+  earthjpg = loadImage('earthmap.jpg');
   moonjpg = loadImage('moonmap1k.jpg');
   marsjpg = loadImage('mars.jpg');
   sunjpg = loadImage('sun.jpg');
   mercuryjpg = loadImage('mercury.jpg');
   venusjpg = loadImage('venus.jpg');
   jupiterjpg = loadImage('jupiter.jpg');  
+  saturnjpg = loadImage('saturnmap.jpg');
   starsjpg = loadImage('stars.jpg');
   //createVRCanvas();
 }
@@ -36,19 +38,25 @@ function setup() {
   fi0earth = (100+36000*0.23)*degtorad;
   fi0mars = (-4.5+19140*0.23)*degtorad;
   fi0jupiter = (34+3034*0.23)*degtorad;
+  fi0saturn = (50+1222*0.23)*degtorad;
 } 
 
 function draw() {
   //setViewerPosition(0, 0, 400);
   //translate(0,0,mouseX/15);
-  rotateX((mouseY-380)/260);
-  rotateY(-mouseX/260);
+  if(mouseIsPressed === true){
+  rotationx += .001;
+  //rotateX(rotationx/111);
+  rotateY(rotationx);
+  } else {
+    rotateY(rotationx);
+  }
   noStroke();
   background(0);
   push();
-  translate(0, 0, -1000);
+  translate(0, 0, 0);
   texture(starsjpg);
-  sphere(4500);
+  sphere(6000);
   pop();
 
   push();
@@ -112,7 +120,22 @@ function draw() {
   translate(0, 0, -700*fctr);
   rotateY(frameCount / 410);
   texture(jupiterjpg);
-  sphere(11);
+  sphere(1*re);//falso
+  pop();
+
+
+  push();
+  rotateY(fi0saturn+frameCount / 10747000);
+  translate(0, 0, -700*fctr);
+  rotateY(frameCount / 446);
+  texture(saturnjpg);
+  rotateX(PI/5);
+  sphere(1*re);//falso
+  rotateX(PI/2);
+      fill('gray'),
+    torus(re+25,5);
+    fill('white');
+    torus(re+50, 5);
   pop();
 
 
