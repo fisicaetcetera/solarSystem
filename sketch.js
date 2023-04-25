@@ -1,6 +1,5 @@
 //solarSystem nov2022
 //feb252023 including view from top
-//mar252023 correctin orbit of the Moon
 let earthjpg;
 let moonjpg;
 let marsjpg;
@@ -14,8 +13,14 @@ let rotationx=0;
 let numdias;
 let centuries;
 let rotx = 0; //Amount of ship s x rotation
+let diaEHora, diaEHora1;
+let myfont;
+let hora, minutos;
+let dia, mes, ano;
+let teta;
 
 function preload() {
+  myfont = loadFont('Catallina.otf');
   earthjpg = loadImage('earthmap.jpg');
   moonjpg = loadImage('moonmap1k.jpg');
   marsjpg = loadImage('mars.jpg');
@@ -39,19 +44,24 @@ function setup() {
   assinatura.text('Bonelli', 190, 85);
   degtorad = PI/180;
   numeroDeDias();
-  //fi0 = fiJ200 + rate (deg) * centuries
+  years = centuries*100;
+  diass = years * 365;
+  fi0earth = (100+36000*centuries)*degtorad;
   fi0mercury = (252+149472.67*centuries)*degtorad;
   fi0venus = (182+58517*centuries)*degtorad;
-  fi0earth = (100+36000*centuries)*degtorad;
   fi0mars = (355+19140*centuries)*degtorad;
   fi0jupiter = (34+3034*centuries)*degtorad;
   fi0saturn = (50+1222*centuries)*degtorad;
-  fi0moon = 578.5 * degtorad;  //L=M+w+o ? Sim, mas atualizar ambos!
+  //fi0moon = M 135.27 + n 125.08 + 360 * years/pnode + w 318.15 + 360 * years/pw;
+  fi0moon = (578.5 + 13.0649929509 * diass +360 * years/18.6 +360 * years/5.997)*degtorad;
   rotfct = 7.3e-5;
   transfct = 7.3e-5/365;
 } 
 
 function draw() {
+  // gets day and time
+  diaEHoraf();
+  console.log('dia e hora', dia, hora, minutos, segundos);
   // Ship's rotation around the Sun
   if(mouseIsPressed === true){
   rotationx += .001;
@@ -59,7 +69,7 @@ function draw() {
   } else {
     rotateY(rotationx);
   }  //ends Ship's rotation Y
-  rotateX(rotx/500);  //ship rotation x controle by wheel 
+  rotateX(rotx/200);  //ship rotation x controle by wheel 
   noStroke();
   background(0);
   push();
@@ -75,15 +85,15 @@ function draw() {
   rotateX(frameCount/130);
   plane(50, 30);
   pop();
-  //pointLight(255,255,0,0,0,200);
-
+  pointLight(255,255,0,0,0,200);
+//---
   push();
 
   texture(sunjpg);
   rotateY(frameCount*2.6e-5);
   // wsol = 2pi/28 dias = 2.6e-5 rd por s
-  //emissiveMaterial(255,255,255);
   sphere(80);
+  
   pop();
   
   push();
@@ -106,14 +116,15 @@ function draw() {
 
   rotateY(fi0earth+frameCount * 2e-7);
   translate(0, 0, -200*fctr);
-  rotateY(frameCount * 7.27e-5);
+  teta = PI * hora / 12;
+  rotateY(frameCount * 7.27e-5 + teta);
   texture(earthjpg);
   sphere(40);
 
-  rotateY(fi0moon+frameCount*1.02e-5);
+  rotateY(fi0moon + frameCount*7.25e-7 + PI);
   translate(0, 0, -58*fctr);
   texture(moonjpg);
-  sphere(0.3*re);
+  sphere(0.25*re);
   
   pop();
 
@@ -148,6 +159,22 @@ function draw() {
     fill('white');
     torus(re+50, 5);
   pop();
+        push();
+      fill(255,0,0,180);
+        textFont(myfont, 20 );
+      text(diaEHora1, -150, -250); //day-month-year
+      text(diaEHora, -150, -230); //hour-minutes-seconds
+      rotateY(-PI/2);
+            text(diaEHora1, -150, -250); //day-month-year
+      text(diaEHora, -150, -230); //hour-minutes-seconds
+            rotateY(-PI/2);
+            text(diaEHora1, -150, -250); //day-month-year
+      text(diaEHora, -150, -230); //hour-minutes-seconds
+       rotateY(-PI/2);
+            text(diaEHora1, -150, -250); //day-month-year
+      text(diaEHora, -150, -230); //hour-minutes-seconds
+ 
+      pop()
 }
 function numeroDeDias() {
 
@@ -164,10 +191,61 @@ function numeroDeDias() {
   centuries = numdias/36525;
   return numdias;
 } //end function numeroDeDias
-
 // Mousewheel to control x rotation
+
 function mouseWheel(event) {
-  rotx = rotx - event.delta;
+  rotx = rotx - event.delta/100;
   return false;
 }
-//
+
+  //calcula dia e hora - não retorna - só define variaveis globais.
+  function diaEHoraf(){
+          now = new Date();
+          ano = now.getFullYear();
+  mes = now.getMonth() + 1;
+  dia = now.getDate();
+  hora = now.getHours();
+  minutos = now.getMinutes();
+  segundos = now.getSeconds();
+      
+      diaEHora1 = dia.toString() + '/';
+      diaEHora1 += mes.toString() + '/';
+      diaEHora1 += ano.toString();
+
+
+      //
+      diaEHora = hora.toString() + ':';
+      segundostxt = segundos.toString();
+      minutostxt = minutos.toString() + ':';
+      if (segundos < 10) {
+        segundostxt = '0' + segundostxt;
+      }
+      if (minutos < 10) {
+        minutostxt = '0' + minutostxt;
+      }
+      diaEHora += minutostxt;
+      diaEHora += segundostxt;
+
+  
+      diaEHora1 = dia.toString() + '/';
+      diaEHora1 += mes.toString() + '/';
+      diaEHora1 += ano.toString();
+      //console.log('dia-mes-e-ano: ', diaEHora1);
+      fill(255);
+
+      //
+      diaEHora = hora.toString() + ':';
+      //diaEHora += minutos.toString() + ':';
+      segundostxt = segundos.toString();
+      minutostxt = minutos.toString() + ':';
+      if (segundos < 10) {
+        segundostxt = '0' + segundostxt;
+      }
+      if (minutos < 10) {
+        minutostxt = '0' + minutostxt;
+      }
+      diaEHora += minutostxt;
+      diaEHora += segundostxt;
+  } //fim-diaEhora()
+  
+  
